@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 
+
 from .models import Post, Category, Comment
 from .forms import PostForm, CommentForm
 
@@ -53,14 +54,13 @@ def post_detail(request, post_id):
         )
     
     comments = post.comments.select_related('author').order_by('created_at')
-    
-    # ДОБАВЛЕНО: создаём пустую форму для комментариев, чтобы шаблон мог её отрисовать
+
     form = CommentForm()
-    
+
     context = {
         'post': post, 
         'comments': comments,
-        'form': form  # ДОБАВЛЕНО: передаём форму в контекст
+        'form': form
     }
     return render(request, template, context)
 
@@ -176,7 +176,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     template_name = 'blog/comment.html'
     
     def dispatch(self, request, *args, **kwargs):
-        # Проверяем существование поста перед созданием комментария
+
         get_object_or_404(Post, pk=self.kwargs['post_id'])
         return super().dispatch(request, *args, **kwargs)
     
