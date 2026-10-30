@@ -137,3 +137,7 @@ MEDIA_URL = '/media/'
 # Настройки отправки электронной почты (файловый бэкенд)
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
+CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
+
+TEMPLATES_DIR = BASE_DIR / 'templates'
